@@ -1,0 +1,81 @@
+version: '3.5'
+services:
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:6.2.0
+    hostname: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:6.2.0
+    hostname: schema-registry
+    depends_on:
+      - zookeeper
+      - kafka
+    ports:
+      - 8081:${SCHEMA_REGISTRY_PORT}
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: 'zookeeper:2181'
+
+  kafka:
+    image: confluentinc/cp-kafka:6.2.0
+    hostname: kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - 9092:${KAFKA_PORT}
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+
+  akhq:
+    image: tchiotludo/akhq:dev
+    ports:
+      - 8083:${AKHQ_PORT}
+    environment:
+      AKHQ_CONFIGURATION: |
+        akhq:
+          connections:
+            docker-kafka-server:
+              properties:
+                bootstrap.servers: "kafka:29092"
+              schema-registry:
+                url: "http://schema_registry:8081"
+          security:
+            default-group: no-filter
+            groups:
+              no-filter:
+                name: no-filter
+                roles:
+                  - topic/read
+                  - topic/insert
+                  - topic/delete
+                  - topic/config/update
+                  - node/read
+                  - node/config/update
+                  - topic/data/read
+                  - topic/data/insert
+                  - topic/data/delete
+                  - group/read
+                  - group/delete
+                  - group/offsets/update
+                  - registry/read
+                  - registry/insert
+                  - registry/update
+                  - registry/delete
+                  - registry/version/delete
+                  - acls/read
+                  - connect/read
+                  - connect/insert
+                  - connect/update
+                  - connect/delete
+                  - connect/state/update
+
+

@@ -1,0 +1,15 @@
+.env
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+target/
+out/
+*.ipr
+*.iws
+.project
+.settings
+.classpath
+.factorypath
