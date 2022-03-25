@@ -1,0 +1,40 @@
+micronaut:
+  application:
+    name: poc-io-streams
+
+kafka:
+  health:
+    enabled: false
+  bootstrap:
+    servers: ${KAFKA_BOOTSTRAP_SERVERS:`localhost:9092`}
+  security:
+    protocol: ${KAFKA_SECURITY_PROTOCOL:PLAINTEXT}
+  sasl:
+    mechanism: ${KAFKA_SASL_MECHANISM:PLAIN}
+    jaas:
+      config: "org.apache.kafka.common.security.scram.ScramLoginModule required\n username=\"${KAFKA_USERNAME:admin}\"\n password=\"${KAFKA_PASSWORD:test}\";"
+  # Schema Registry Configuration
+  producers:
+    default:
+      value:
+        serializer: "io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer"
+      key:
+        serializer: "io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer"
+  consumers:
+    default:
+      value:
+        deserializer: "io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializer"
+      key:
+        deserializer: "io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializer"
+  schema.registry.url: ${SCHEMA_REGISTRY:`http://localhost:8081`}
+  json:
+    fail.invalid.schema: true
+    write.dates.iso8601: true
+  auto.register.schemas: false
+  use.latest.version: true
+  latest.compatibility.strict: false
+
+# JSON Settings
+jackson:
+  property-naming-strategy: SNAKE_CASE
+
