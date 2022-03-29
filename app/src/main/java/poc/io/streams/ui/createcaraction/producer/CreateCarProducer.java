@@ -11,11 +11,13 @@ import reactor.core.publisher.Mono;
 )
 public abstract class CreateCarProducer {
 
+  public static final String TOPIC_NAME = "input-create-car";
+
   public Mono<Void> handle(CreateCarMessage message) {
     return provide(message.id, message, message.requestId);
   }
 
-  @Topic("input-create-car")
+  @Topic(TOPIC_NAME)
   abstract protected Mono<Void> provide(
     @KafkaKey String resourceId,
     CreateCarMessage message,
