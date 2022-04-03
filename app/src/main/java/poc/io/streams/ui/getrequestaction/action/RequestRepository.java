@@ -4,8 +4,8 @@ import reactor.core.publisher.Mono;
 
 public interface RequestRepository {
   record Request(
-    String id,
-    Integer statusCode
+    String correlationId,
+    String status
   ) {
   }
 

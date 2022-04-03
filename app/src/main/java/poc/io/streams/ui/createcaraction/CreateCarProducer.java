@@ -1,4 +1,4 @@
-package poc.io.streams.ui.createcaraction.producer;
+package poc.io.streams.ui.createcaraction;
 
 import io.micronaut.configuration.kafka.annotation.KafkaClient;
 import io.micronaut.configuration.kafka.annotation.KafkaKey;
@@ -14,18 +14,18 @@ public abstract class CreateCarProducer {
   public static final String TOPIC_NAME = "input-create-car";
 
   public Mono<Void> handle(CreateCarMessage message) {
-    return provide(message.id, message, message.requestId);
+    return provide(message.id, message, message.correlationId);
   }
 
   @Topic(TOPIC_NAME)
   abstract protected Mono<Void> provide(
     @KafkaKey String resourceId,
     CreateCarMessage message,
-    @MessageHeader("request-id") String requestId
+    @MessageHeader("correlation-id") String correlationId
   );
 
   public record CreateCarMessage(
-    String requestId,
+    String correlationId,
     String id,
     String name,
     String vim,

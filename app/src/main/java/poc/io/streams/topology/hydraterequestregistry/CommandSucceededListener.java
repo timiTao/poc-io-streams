@@ -1,4 +1,4 @@
-package poc.io.streams.topology.createcar;
+package poc.io.streams.topology.hydraterequestregistry;
 
 import io.micronaut.configuration.kafka.annotation.KafkaListener;
 import io.micronaut.configuration.kafka.annotation.OffsetReset;
@@ -6,16 +6,14 @@ import io.micronaut.configuration.kafka.annotation.OffsetStrategy;
 import io.micronaut.configuration.kafka.annotation.Topic;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.core.util.StringUtils;
-import jakarta.inject.Inject;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import poc.io.streams.infrastructure.message.CommandSucceeded;
 import poc.io.streams.infrastructure.message.MessageProducer;
-import poc.io.streams.ui.createcaraction.CreateCarProducer;
 
 @KafkaListener(
-  groupId = "create-car-listener",
-  clientId = "create-car-listener",
+  groupId = "commands-result-listener",
+  clientId = "commands-result-listener",
   offsetReset = OffsetReset.EARLIEST,
   offsetStrategy = OffsetStrategy.DISABLED,
   properties = {
@@ -23,16 +21,12 @@ import poc.io.streams.ui.createcaraction.CreateCarProducer;
     @Property(name = ConsumerConfig.MAX_POLL_RECORDS_CONFIG, value = "1")
   }
 )
-public class CreateCarListener {
-  @Inject
-  private MessageProducer messageProducer;
+public class CommandSucceededListener {
 
-  @Topic(CreateCarProducer.TOPIC_NAME)
+  @Topic(MessageProducer.TOPIC_NAME)
   public void handle(
-    CreateCarProducer.CreateCarMessage message,
+    CommandSucceeded message,
     Consumer<?, ?> kafkaConsumer) {
 
-
-    messageProducer.handle(new CommandSucceeded(message.id())).block();
   }
 }
