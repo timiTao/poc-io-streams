@@ -33,7 +33,7 @@ For future retrospective perspective, I would like to full records my problems, 
 ## Today I Learned
 
 This is a little longer list as was initial to this PoC
-* till now I read
+* till now, I read
     * [Transaction outbox pattern](https://microservices.io/patterns/data/transactional-outbox.html)
     * [Exactly one processing](https://www.confluent.io/blog/exactly-once-semantics-are-possible-heres-how-apache-kafka-does-it/)
 
@@ -42,3 +42,10 @@ This is a little longer list as was initial to this PoC
 * [Choreography Sagas in DDD - Chain of Integration Events?](https://stackoverflow.com/questions/63597403/choreography-sagas-in-ddd-chain-of-integration-events)
 * [Pattern: Saga](https://microservices.io/patterns/data/saga.html)
 * [Java for the Haters in 100 Seconds](https://www.youtube.com/watch?v=m4-HM_sCvtQ)
+
+
+[05.04.2022]
+
+* [The Top 5 Redis-Based Java Objects](https://redisson.org/articles/the-top-5-redis-based-objects-used-in-java.html)
+* [A Guide to Redis with Redisson](https://www.baeldung.com/redis-redisson)
+* [Mono switchIfEmpty vs defaultIfEmpty](https://tedblob.com/mono-switchifempty-vs-defaultifempty/)

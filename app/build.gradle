@@ -5,6 +5,15 @@ plugins {
     id("checkstyle")
 }
 
+
+micronaut {
+    runtime("netty")
+    processing {
+        incremental(true)
+        annotations("poc.io.streams.*")
+    }
+}
+
 repositories {
     mavenCentral()
     maven {
@@ -16,6 +25,9 @@ repositories {
 }
 
 dependencies {
+    runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.75.Final:osx-x86_64")
+    runtimeOnly("ch.qos.logback:logback-classic")
+
     implementation("io.micronaut:micronaut-management")
     implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.kafka:micronaut-kafka") {
@@ -23,6 +35,8 @@ dependencies {
     }
     implementation("io.confluent:kafka-json-schema-serializer:6.2.1")
     implementation("io.micronaut.reactor:micronaut-reactor")
+    implementation("org.redisson:redisson:3.17.0")
+
 
     testImplementation("com.github.tomakehurst:wiremock-jre8:2.32.0")
     testImplementation("io.micronaut.test:micronaut-test-junit5")

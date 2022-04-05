@@ -21,12 +21,13 @@ kafka:
       key:
         serializer: "io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer"
   consumers:
+    allow.auto.create.topics: true
     default:
       value:
         deserializer: "io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializer"
       key:
         deserializer: "io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializer"
-  schema.registry.url: ${SCHEMA_REGISTRY:`http://localhost:8081`}
+  schema.registry.url: ${SCHEMA_REGISTRY:`http://localhost:8086`}
   json:
     fail.invalid.schema: true
     write.dates.iso8601: true
@@ -38,3 +39,5 @@ kafka:
 jackson:
   property-naming-strategy: SNAKE_CASE
 
+redis:
+  url: "redis://127.0.0.1:6379"

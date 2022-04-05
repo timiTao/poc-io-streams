@@ -27,12 +27,15 @@ public class CreateCarListener {
   @Inject
   private MessageProducer messageProducer;
 
+  @Inject
+  private CreateCarProducer createCarProducer;
+
   @Topic(CreateCarProducer.TOPIC_NAME)
   public void handle(
     CreateCarProducer.CreateCarMessage message,
     Consumer<?, ?> kafkaConsumer) {
 
-
+//    createCarProducer.handle()
     messageProducer.handle(new CommandSucceeded(message.id())).block();
   }
 }

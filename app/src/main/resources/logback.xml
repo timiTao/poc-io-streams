@@ -1,0 +1,18 @@
+<configuration debug="false">
+
+  <logger name="org.flywaydb.core" level="INFO"/>
+  <logger name="io.micronaut.data.query" level="INFO"/>
+  <logger name="io.micronaut.http.client" level="INFO"/>
+
+  <!-- known noisy logger -->
+  <Logger name="org.apache.zookeeper.ClientCnxn" level="WARN"/>
+  <Logger name="org.apache.kafka.clients.NetworkClient" level="WARN"/>
+  <Logger name="org.apache.kafka.clients.FetchSessionHandler" level="WARN"/>
+  <Logger name="org.apache.kafka.clients.consumer.internals" level="WARN"/>
+  <Logger name="org.apache.kafka.clients.producer.internals" level="WARN"/>
+  <Logger name="org.apache.kafka.common" level="WARN"/>
+
+  <root level="info">
+    <appender-ref ref="STDOUT"/>
+  </root>
+</configuration>
