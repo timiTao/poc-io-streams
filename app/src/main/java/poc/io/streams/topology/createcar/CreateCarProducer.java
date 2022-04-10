@@ -18,7 +18,7 @@ public abstract class CreateCarProducer {
   }
 
   @Topic(TOPIC_NAME)
-  abstract protected Mono<Void> provide(
+  protected abstract Mono<Void> provide(
     @KafkaKey String aggregateOd,
     Car.CarCreated event,
     @MessageHeader("casualty-id") String casualtyId

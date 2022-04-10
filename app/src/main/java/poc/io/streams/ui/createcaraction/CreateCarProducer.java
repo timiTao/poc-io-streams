@@ -18,7 +18,7 @@ public abstract class CreateCarProducer {
   }
 
   @Topic(TOPIC_NAME)
-  abstract protected Mono<Void> provide(
+  protected abstract Mono<Void> provide(
     @KafkaKey String resourceId,
     CreateCarMessage message,
     @MessageHeader("correlation-id") String correlationId

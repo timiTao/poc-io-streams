@@ -24,8 +24,10 @@ public class Car {
     String id();
   }
 
-
-  private String id, name, vim, productionYear;
+  private String id;
+  private String name;
+  private String vim;
+  private String productionYear;
 
   public Car(String id, String name, String vim, String productionYear) {
     this.id = id;

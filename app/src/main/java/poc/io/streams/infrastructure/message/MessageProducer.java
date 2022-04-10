@@ -25,7 +25,7 @@ public abstract class MessageProducer {
   }
 
   @Topic(TOPIC_NAME)
-  abstract protected Mono<Void> provide(
+  protected abstract Mono<Void> provide(
     @KafkaKey String id,
     Message event,
     @MessageHeader("correlation-id") String correlationId,
