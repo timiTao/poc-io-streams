@@ -53,3 +53,5 @@ This is a little longer list as was initial to this PoC
 [09.04.2020]
 
 * Whole list of related solutions to: [Topic not present in metadata after 60000 ms](https://stackoverflow.com/questions/63714401/org-apache-kafka-common-errors-timeoutexception-topic-not-present-in-metadata-a)
+* [My Client Won’t Connect to My Apache Kafka Cluster in Docker](https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/)
+  * [Example of local Kafka configuration](https://github.com/confluentinc/cp-all-in-one)

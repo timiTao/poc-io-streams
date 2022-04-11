@@ -1,5 +1,4 @@
-<configuration debug="false">
-
+<configuration debug="true">
   <logger name="org.flywaydb.core" level="INFO"/>
   <logger name="io.micronaut.data.query" level="INFO"/>
   <logger name="io.micronaut.http.client" level="INFO"/>
@@ -9,7 +8,15 @@
   <Logger name="org.apache.kafka.clients.NetworkClient" level="WARN"/>
   <Logger name="org.apache.kafka.clients.FetchSessionHandler" level="WARN"/>
   <Logger name="org.apache.kafka.clients.consumer.internals" level="WARN"/>
-  <Logger name="org.apache.kafka.clients.producer.internals" level="WARN"/>
+  <Logger name="org.apache.kafka.clients.producer.internals" level="DEBUG"/>
   <Logger name="org.apache.kafka.common" level="WARN"/>
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder>
+      <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+    </encoder>
+  </appender>
 
+  <root level="debug">
+    <appender-ref ref="STDOUT" />
+  </root>
 </configuration>
