@@ -6,6 +6,7 @@ import io.micronaut.configuration.kafka.annotation.OffsetStrategy;
 import io.micronaut.configuration.kafka.annotation.Topic;
 import io.micronaut.context.annotation.Property;
 import io.micronaut.core.util.StringUtils;
+import io.micronaut.messaging.annotation.MessageHeader;
 import jakarta.inject.Inject;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
@@ -33,9 +34,11 @@ public class CreateCarListener {
   @Topic(CreateCarProducer.TOPIC_NAME)
   public void handle(
     CreateCarProducer.CreateCarMessage message,
+    @MessageHeader("correlation-id") String correlationId,
     Consumer<?, ?> kafkaConsumer) {
 
     //    createCarProducer.handle()
-    messageProducer.handle(new CommandSucceeded(message.id())).block();
+    messageProducer.handle(new CommandSucceeded(correlationId)).block();
+    kafkaConsumer.commitAsync();
   }
 }

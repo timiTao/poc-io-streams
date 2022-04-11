@@ -1,5 +1,6 @@
 package poc.io.streams.ui.createcaraction;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.micronaut.configuration.kafka.annotation.KafkaClient;
 import io.micronaut.configuration.kafka.annotation.KafkaKey;
 import io.micronaut.configuration.kafka.annotation.Topic;
@@ -18,11 +19,11 @@ public abstract class CreateCarProducer {
   }
 
   public record CreateCarMessage(
-    String correlationId,
-    String id,
-    String name,
-    String vim,
-    String productionYear
+    @JsonProperty("correlation_id") String correlationId,
+    @JsonProperty("id") String id,
+    @JsonProperty("name") String name,
+    @JsonProperty("vim") String vim,
+    @JsonProperty("production_year") String productionYear
   ) {
   }
 

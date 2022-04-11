@@ -14,13 +14,12 @@ public abstract class CreateCarProducer {
   public static final String TOPIC_NAME = "car";
 
   public Mono<Void> handle(Car.CarCreated event) {
-    return provide(event.id(), event, "");
+    return provide(event.id(), event);
   }
 
   @Topic(TOPIC_NAME)
   protected abstract Mono<Void> provide(
     @KafkaKey String aggregateOd,
-    Car.CarCreated event,
-    @MessageHeader("casualty-id") String casualtyId
+    Car.CarCreated event
   );
 }

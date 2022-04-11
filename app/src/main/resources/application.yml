@@ -15,19 +15,19 @@ kafka:
       config: "org.apache.kafka.common.security.scram.ScramLoginModule required\n username=\"${KAFKA_USERNAME:admin}\"\n password=\"${KAFKA_PASSWORD:test}\";"
   # Schema Registry Configuration
   producers:
-    default:
-      value:
-        serializer: "io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer"
-      key:
-        serializer: "io.confluent.kafka.serializers.json.KafkaJsonSchemaSerializer"
+#    default:
+#      value:
+#        serializer: "org.apache.kafka.common.serialization.StringSerializer"
+#      key:
+#        serializer: "org.apache.kafka.common.serialization.StringSerializer"
   consumers:
     allow.auto.create.topics: true
-    default:
-      value:
-        deserializer: "io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializer"
-      key:
-        deserializer: "io.confluent.kafka.serializers.json.KafkaJsonSchemaDeserializer"
-  schema.registry.url: ${SCHEMA_REGISTRY:`http://localhost:8086`}
+#    default:
+#      value:
+#        deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+#      key:
+#        deserializer: "org.apache.kafka.common.serialization.StringDeserializer"
+#  schema.registry.url: ${SCHEMA_REGISTRY:`http://localhost:8081`}
   json:
     fail.invalid.schema: true
     write.dates.iso8601: true
