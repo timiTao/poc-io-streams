@@ -12,7 +12,4 @@
   <Logger name="org.apache.kafka.clients.producer.internals" level="WARN"/>
   <Logger name="org.apache.kafka.common" level="WARN"/>
 
-  <root level="info">
-    <appender-ref ref="STDOUT"/>
-  </root>
 </configuration>

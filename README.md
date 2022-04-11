@@ -49,3 +49,7 @@ This is a little longer list as was initial to this PoC
 * [The Top 5 Redis-Based Java Objects](https://redisson.org/articles/the-top-5-redis-based-objects-used-in-java.html)
 * [A Guide to Redis with Redisson](https://www.baeldung.com/redis-redisson)
 * [Mono switchIfEmpty vs defaultIfEmpty](https://tedblob.com/mono-switchifempty-vs-defaultifempty/)
+
+[09.04.2020]
+
+* Whole list of related solutions to: [Topic not present in metadata after 60000 ms](https://stackoverflow.com/questions/63714401/org-apache-kafka-common-errors-timeoutexception-topic-not-present-in-metadata-a)

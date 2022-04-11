@@ -2,7 +2,6 @@ package poc.io.streams.topology.hydraterequestregistry;
 
 import jakarta.inject.Inject;
 import org.redisson.api.RedissonClient;
-import org.redisson.codec.JsonJacksonCodec;
 import reactor.core.publisher.Mono;
 
 public class RequestRepository {
@@ -12,9 +11,9 @@ public class RequestRepository {
 
   Mono<Void> save(Request request) {
     return Mono.empty();
-    //    return Mono.fromCallable(() -> client.getBucket("request:" + request.id, JsonJacksonCodec.INSTANCE))
-    //      .flatMap(bucket -> bucket.set(request))
-    //      .then();
+    //  return Mono.fromCallable(() -> client.getBucket("request:" + request.id, JsonJacksonCodec.INSTANCE))
+    //    .flatMap(bucket -> bucket.set(request))
+    //    .then();
   }
 
   public record Request(

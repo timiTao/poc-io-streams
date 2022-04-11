@@ -6,7 +6,7 @@ kafka:
   health:
     enabled: false
   bootstrap:
-    servers: ${KAFKA_BOOTSTRAP_SERVERS:`localhost:9092`}
+    servers: ${KAFKA_BOOTSTRAP_SERVERS:`localhost:9094`}
   security:
     protocol: ${KAFKA_SECURITY_PROTOCOL:PLAINTEXT}
   sasl:
@@ -34,6 +34,7 @@ kafka:
   auto.register.schemas: false
   use.latest.version: true
   latest.compatibility.strict: false
+  max.block.ms: 5000 # 5s
 
 # JSON Settings
 jackson:

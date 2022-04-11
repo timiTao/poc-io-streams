@@ -17,13 +17,6 @@ public abstract class CreateCarProducer {
     return provide(message.id, message, message.correlationId);
   }
 
-  @Topic(TOPIC_NAME)
-  protected abstract Mono<Void> provide(
-    @KafkaKey String resourceId,
-    CreateCarMessage message,
-    @MessageHeader("correlation-id") String correlationId
-  );
-
   public record CreateCarMessage(
     String correlationId,
     String id,
@@ -32,4 +25,11 @@ public abstract class CreateCarProducer {
     String productionYear
   ) {
   }
+
+  @Topic(TOPIC_NAME)
+  protected abstract Mono<Void> provide(
+    @KafkaKey String resourceId,
+    CreateCarMessage message,
+    @MessageHeader("correlation-id") String correlationId
+  );
 }
