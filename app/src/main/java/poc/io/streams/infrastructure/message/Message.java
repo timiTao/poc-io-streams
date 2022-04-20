@@ -1,5 +1,7 @@
 package poc.io.streams.infrastructure.message;
 
 public interface Message {
-  String getId();
+  String id();
+
+  String type();
 }

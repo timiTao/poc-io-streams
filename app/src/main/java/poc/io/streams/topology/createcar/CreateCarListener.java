@@ -10,6 +10,7 @@ import io.micronaut.messaging.annotation.MessageHeader;
 import jakarta.inject.Inject;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import poc.io.streams.infrastructure.message.CommandFailed;
 import poc.io.streams.infrastructure.message.CommandSucceeded;
 import poc.io.streams.infrastructure.message.MessageProducer;
 import poc.io.streams.ui.createcaraction.CreateCarProducer;
@@ -38,7 +39,8 @@ public class CreateCarListener {
     Consumer<?, ?> kafkaConsumer) {
 
     //    createCarProducer.handle()
-    messageProducer.handle(new CommandSucceeded(correlationId)).block();
+//    messageProducer.handle(new CommandSucceeded(correlationId)).block();
+    messageProducer.handle(new CommandFailed(correlationId)).block();
     kafkaConsumer.commitAsync();
   }
 }

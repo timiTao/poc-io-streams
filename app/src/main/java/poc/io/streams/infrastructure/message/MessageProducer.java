@@ -3,11 +3,17 @@ package poc.io.streams.infrastructure.message;
 import io.micronaut.configuration.kafka.annotation.KafkaClient;
 import io.micronaut.configuration.kafka.annotation.KafkaKey;
 import io.micronaut.configuration.kafka.annotation.Topic;
-import io.micronaut.messaging.annotation.MessageHeader;
+import io.micronaut.context.annotation.Property;
 import reactor.core.publisher.Mono;
 
 @KafkaClient(
-  acks = KafkaClient.Acknowledge.ALL
+  acks = KafkaClient.Acknowledge.ALL,
+  properties = {
+    @Property(
+      name = "value.subject.name.strategy",
+      value = "io.confluent.kafka.serializers.subject.TopicRecordNameStrategy"
+    )
+  }
 )
 public abstract class MessageProducer {
 
@@ -15,7 +21,7 @@ public abstract class MessageProducer {
 
   public Mono<Void> handle(Message message) {
     return provide(
-      message.getId(),
+      message.id(),
       message
     );
   }

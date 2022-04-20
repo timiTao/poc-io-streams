@@ -1,4 +1,4 @@
-<configuration debug="true">
+<configuration debug="false">
   <logger name="org.flywaydb.core" level="INFO"/>
   <logger name="io.micronaut.data.query" level="INFO"/>
   <logger name="io.micronaut.http.client" level="INFO"/>

@@ -9,6 +9,8 @@ import io.micronaut.core.util.StringUtils;
 import jakarta.inject.Inject;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import poc.io.streams.infrastructure.message.CommandFailed;
 import poc.io.streams.infrastructure.message.CommandSucceeded;
 import poc.io.streams.infrastructure.message.InvalidArgumentsCommand;
@@ -23,10 +25,15 @@ import reactor.core.publisher.Mono;
   offsetStrategy = OffsetStrategy.DISABLED,
   properties = {
     @Property(name = ConsumerConfig.ALLOW_AUTO_CREATE_TOPICS_CONFIG, value = StringUtils.TRUE),
-    @Property(name = ConsumerConfig.MAX_POLL_RECORDS_CONFIG, value = "1")
+    @Property(name = ConsumerConfig.MAX_POLL_RECORDS_CONFIG, value = "1"),
+    @Property(
+      name = "value.subject.name.strategy",
+      value = "io.confluent.kafka.serializers.subject.TopicRecordNameStrategy"
+    )
   }
 )
 public class CommandsMessageListener {
+  private final Logger log = LoggerFactory.getLogger(CommandsMessageListener.class);
 
   @Inject
   private RequestRepository requestRepository;
@@ -36,7 +43,8 @@ public class CommandsMessageListener {
     CommandSucceeded message,
     Consumer<?, ?> kafkaConsumer) {
 
-    Mono.fromCallable(() -> new Request(message.getId(), Request.State.SUCCESSES))
+    Mono.fromCallable(() -> new Request(message.id(), Request.State.SUCCESSES))
+      .doOnNext(___ -> log.info("TUTAJ CommandSucceeded "))
       .flatMap(request -> requestRepository.save(request))
       .block();
     kafkaConsumer.commitAsync();
@@ -47,8 +55,10 @@ public class CommandsMessageListener {
     CommandFailed message,
     Consumer<?, ?> kafkaConsumer) {
 
-    Mono.fromCallable(() -> new Request(message.getId(), Request.State.FAILED))
+    Mono.fromCallable(() -> new Request(message.id(), Request.State.FAILED))
+      .doOnNext(___ -> log.info("TUTAJ CommandFailed "))
       .flatMap(request -> requestRepository.save(request))
+      .doOnNext(___ -> log.info("TUTAJ CommandFailed redis "))
       .block();
     kafkaConsumer.commitAsync();
   }
@@ -58,7 +68,8 @@ public class CommandsMessageListener {
     InvalidArgumentsCommand message,
     Consumer<?, ?> kafkaConsumer) {
 
-    Mono.fromCallable(() -> new Request(message.getId(), Request.State.INVALID_ARGUMENTS))
+    Mono.fromCallable(() -> new Request(message.id(), Request.State.INVALID_ARGUMENTS))
+      .doOnNext(___ -> log.info("TUTAJ InvalidArgumentsCommand "))
       .flatMap(request -> requestRepository.save(request))
       .block();
     kafkaConsumer.commitAsync();
