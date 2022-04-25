@@ -50,8 +50,21 @@ This is a little longer list as was initial to this PoC
 * [A Guide to Redis with Redisson](https://www.baeldung.com/redis-redisson)
 * [Mono switchIfEmpty vs defaultIfEmpty](https://tedblob.com/mono-switchifempty-vs-defaultifempty/)
 
-[09.04.2020]
+[09.04.2022]
 
 * Whole list of related solutions to: [Topic not present in metadata after 60000 ms](https://stackoverflow.com/questions/63714401/org-apache-kafka-common-errors-timeoutexception-topic-not-present-in-metadata-a)
 * [My Client Won’t Connect to My Apache Kafka Cluster in Docker](https://www.confluent.io/blog/kafka-client-cannot-connect-to-broker-on-aws-on-docker-etc/)
   * [Example of local Kafka configuration](https://github.com/confluentinc/cp-all-in-one)
+
+[25.04.2022]
+
+Summary update
+* [Lettuce - alternative to Reddison](https://github.com/lettuce-io/lettuce-core)
+* [Serializers/Deserializers in Confluent](https://docs.confluent.io/platform/current/schema-registry/serdes-develop/index.html)
+* [Event streams patterns](https://developer.confluent.io/patterns/event/event-standardizer)
+* [Support of EventBus in Micronaut](https://github.com/micronaut-projects/micronaut-core/issues/611)
+  * [Adapter solution](https://docs.micronaut.io/snapshot/guide/index.html#adapterAdvice)
+* [Advanced operations in Reactor](https://projectreactor.io/docs/core/release/reference/#advanced-mutualizing-operator-usage)
+* [12 Factor app](https://12factor.net/)
+* [Reactive manifesto](https://www.reactivemanifesto.org/)
+* [PL] [Co ssie w programowaniu reaktywnym / What sucks in reactive programming](https://www.youtube.com/watch?v=WxCb6TMkNd8)
