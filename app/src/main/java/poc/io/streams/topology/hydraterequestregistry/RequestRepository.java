@@ -11,9 +11,9 @@ public class RequestRepository {
   private RedissonClient client;
 
   Mono<Void> save(Request request) {
-      return Mono.fromCallable(() -> client.getBucket("request:" + request.id, JsonJacksonCodec.INSTANCE))
-        .doOnNext(bucket -> bucket.set(request))
-        .then();
+    return Mono.fromCallable(() -> client.getBucket("request:" + request.id, JsonJacksonCodec.INSTANCE))
+      .doOnNext(bucket -> bucket.set(request))
+      .then();
   }
 
   public record Request(

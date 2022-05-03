@@ -8,10 +8,13 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.PathVariable;
 import jakarta.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import reactor.core.publisher.Mono;
 
 @Controller
 public class GetRequestAction {
+  private final Logger log = LoggerFactory.getLogger(GetRequestAction.class);
 
   @Inject
   private RequestRepository requestRepository;
@@ -23,7 +26,9 @@ public class GetRequestAction {
   public Mono<MutableHttpResponse<String>> handle(@PathVariable String id) {
 
     return requestRepository.find(id)
+      .doOnNext(___ -> log.info("requestRepository.find " + id))
       .flatMap(this::displayRequest)
+      .doOnNext(response -> log.info("response.find " + response.status()))
       .defaultIfEmpty(HttpResponse.notFound());
   }
 

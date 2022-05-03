@@ -23,7 +23,7 @@ public class RequestRepository {
 
   Mono<Request> find(String id) {
     return Mono.fromCallable(() -> client.getBucket("request:" + id, JsonJacksonCodec.INSTANCE))
-      .map(RBucket::get)
+      .mapNotNull(RBucket::get)
       .map(result -> (Request) result);
   }
 }

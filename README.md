@@ -68,3 +68,7 @@ Summary update
 * [12 Factor app](https://12factor.net/)
 * [Reactive manifesto](https://www.reactivemanifesto.org/)
 * [PL] [Co ssie w programowaniu reaktywnym / What sucks in reactive programming](https://www.youtube.com/watch?v=WxCb6TMkNd8)
+
+[03.05.2022]
+
+* [Returning null in map vs flatMap](https://stackoverflow.com/questions/58215810/returning-a-null-in-a-map-versus-flatmap-in-reactor)
