@@ -72,3 +72,9 @@ Summary update
 [03.05.2022]
 
 * [Returning null in map vs flatMap](https://stackoverflow.com/questions/58215810/returning-a-null-in-a-map-versus-flatmap-in-reactor)
+* Split integration & unit tests with `sourceSets`
+  * [example of configuration](https://github.com/corda/samples-kotlin-corda5/blob/afec20735f03e13b2a4097cec06405ec25daf2b5/Tutorial/missionmars/workflows/build.gradle)
+  * [Gradle documentation](https://docs.gradle.org/current/userguide/java_testing.html#sec:configuring_java_integration_tests)
+  * [Adapter/plugin using `sourceSets` jvm_test_suite](https://docs.gradle.org/current/userguide/jvm_test_suite_plugin.html)
+  * [and why Intellij won't mark them as test sources automatically](https://github.com/gradle/gradle/issues/19645)
+* [Adding context to Mono flow for correlationId that omits main logic](https://projectreactor.io/docs/core/release/reference/#context)

@@ -4,7 +4,6 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Post;
-import jakarta.inject.Inject;
 import java.util.UUID;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
@@ -14,14 +13,19 @@ import reactor.core.publisher.Mono;
 @Controller
 public class CreateCarAction {
 
-  @Inject
-  private CreateCarProducer producer;
+  private final CreateCarProducer producer;
+
+  public CreateCarAction(CreateCarProducer producer) {
+    this.producer = producer;
+  }
 
   @Post("/v1/cars")
   public Mono<HttpResponse<String>> handle(@Body @NotEmpty CreateCarRequest request) {
-    String requestId = UUID.randomUUID().toString();
-    return producer.handle(request.toMessage(requestId))
-      .thenReturn(HttpResponse.accepted(HttpResponse.uri("v1/request/" + requestId)));
+    String correlationId = UUID.randomUUID().toString();
+
+    return producer.handle(request.toMessage())
+      .contextWrite(ctx -> ctx.put("correlation-id", correlationId))
+      .thenReturn(HttpResponse.accepted(HttpResponse.uri("v1/request/" + correlationId)));
   }
 
   public record CreateCarRequest(
@@ -30,9 +34,8 @@ public class CreateCarAction {
     @NotBlank String vim,
     @NotBlank @Size(min = 4, max = 4) String productionYear
   ) {
-    CreateCarProducer.CreateCarMessage toMessage(String requestId) {
+    CreateCarProducer.CreateCarMessage toMessage() {
       return new CreateCarProducer.CreateCarMessage(
-        requestId,
         this.id,
         this.name,
         this.vim,

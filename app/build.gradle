@@ -3,11 +3,12 @@ plugins {
     id('application')
     id("io.micronaut.application") version "3.1.1"
     id("checkstyle")
+    id("jacoco")
 }
-
 
 micronaut {
     runtime("netty")
+    testRuntime("junit5")
     processing {
         incremental(true)
         annotations("poc.io.streams.*")
@@ -24,28 +25,67 @@ repositories {
     }
 }
 
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
+
+test {
+    finalizedBy jacocoTestReport
+}
+
+sourceSets {
+    integrationTest {
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
+configurations {
+    integrationTestImplementation.extendsFrom implementation
+    integrationTestRuntimeOnly.extendsFrom runtimeOnly
+}
+
+tasks.register('integrationTest', Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
+    shouldRunAfter test
+}
+
+check.dependsOn integrationTest
+
 dependencies {
+    annotationProcessor("io.micronaut.data:micronaut-data-processor")
+
     runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.75.Final:osx-x86_64")
     runtimeOnly("ch.qos.logback:logback-classic")
 
+    implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-management")
     implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.kafka:micronaut-kafka") {
         exclude group: "org.apache.kafka", module: "kafka-clients"
     }
-    implementation("io.confluent:kafka-json-schema-serializer:6.2.1")
     implementation("io.micronaut.reactor:micronaut-reactor")
+    implementation("io.confluent:kafka-json-schema-serializer:6.2.1")
     implementation("org.redisson:redisson:3.17.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.0.1")
 
     testImplementation("com.github.tomakehurst:wiremock-jre8:2.32.0")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
-    testImplementation("org.awaitility:awaitility:4.1.1")
     testImplementation("org.assertj:assertj-core:3.21.0")
-    testImplementation("io.projectreactor:reactor-test:3.2.3.RELEASE")
-    testImplementation("org.testcontainers:junit-jupiter")
-    testImplementation("org.testcontainers:kafka")
-    testImplementation("org.testcontainers:testcontainers")
+
+    integrationTestImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    integrationTestImplementation("io.micronaut.test:micronaut-test-junit5")
+    integrationTestImplementation("org.awaitility:awaitility:4.1.1")
+    integrationTestImplementation("org.assertj:assertj-core:3.21.0")
+    integrationTestImplementation("org.testcontainers:junit-jupiter")
+    integrationTestImplementation("org.testcontainers:kafka")
+    integrationTestImplementation("org.testcontainers:testcontainers")
 }
 
 application {

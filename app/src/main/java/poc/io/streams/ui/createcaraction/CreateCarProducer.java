@@ -15,11 +15,11 @@ public abstract class CreateCarProducer {
   public static final String TOPIC_NAME = "input-create-car";
 
   public Mono<Void> handle(CreateCarMessage message) {
-    return provide(message.id, message, message.correlationId);
+    return Mono.deferContextual(Mono::just)
+      .flatMap(ctx -> provide(message.id, message, String.valueOf(ctx.get("correlation-id"))));
   }
 
   public record CreateCarMessage(
-    @JsonProperty("correlation_id") String correlationId,
     @JsonProperty("id") String id,
     @JsonProperty("name") String name,
     @JsonProperty("vim") String vim,
