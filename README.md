@@ -77,4 +77,5 @@ Summary update
   * [Gradle documentation](https://docs.gradle.org/current/userguide/java_testing.html#sec:configuring_java_integration_tests)
   * [Adapter/plugin using `sourceSets` jvm_test_suite](https://docs.gradle.org/current/userguide/jvm_test_suite_plugin.html)
   * [and why Intellij won't mark them as test sources automatically](https://github.com/gradle/gradle/issues/19645)
+  * [how make working addition `sourceSets` with @MicronautTest](https://stackoverflow.com/questions/70021815/how-to-separate-unit-and-integration-tests-when-in-gradle-project-with-micronaut)
 * [Adding context to Mono flow for correlationId that omits main logic](https://projectreactor.io/docs/core/release/reference/#context)

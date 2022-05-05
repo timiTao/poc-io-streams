@@ -6,12 +6,20 @@ plugins {
     id("jacoco")
 }
 
+sourceSets {
+    integrationTest {
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
+    }
+}
+
 micronaut {
     runtime("netty")
     testRuntime("junit5")
     processing {
         incremental(true)
         annotations("poc.io.streams.*")
+        additionalSourceSets.add(sourceSets.getByName("integrationTest"))
     }
 }
 
@@ -35,15 +43,8 @@ test {
     finalizedBy jacocoTestReport
 }
 
-sourceSets {
-    integrationTest {
-        compileClasspath += main.output + test.output
-        runtimeClasspath += main.output + test.output
-    }
-}
-
 configurations {
-    integrationTestImplementation.extendsFrom implementation
+    integrationTestImplementation.extendsFrom testImplementation
     integrationTestRuntimeOnly.extendsFrom runtimeOnly
 }
 
@@ -75,17 +76,21 @@ dependencies {
     implementation("org.redisson:redisson:3.17.0")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.0.1")
 
-    testImplementation("com.github.tomakehurst:wiremock-jre8:2.32.0")
     testImplementation("io.micronaut.test:micronaut-test-junit5")
     testImplementation("org.assertj:assertj-core:3.21.0")
+    testAnnotationProcessor("io.micronaut:micronaut-inject-java")
 
-    integrationTestImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+
+    integrationTestAnnotationProcessor("io.micronaut:micronaut-inject-java")
+    integrationTestRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.7.1")
+    integrationTestImplementation("org.junit.jupiter:junit-jupiter-api")
     integrationTestImplementation("io.micronaut.test:micronaut-test-junit5")
     integrationTestImplementation("org.awaitility:awaitility:4.1.1")
     integrationTestImplementation("org.assertj:assertj-core:3.21.0")
     integrationTestImplementation("org.testcontainers:junit-jupiter")
     integrationTestImplementation("org.testcontainers:kafka")
     integrationTestImplementation("org.testcontainers:testcontainers")
+    integrationTestImplementation("com.github.tomakehurst:wiremock-jre8:2.32.0")
 }
 
 application {
@@ -97,4 +102,8 @@ checkstyleMain {
 }
 checkstyleTest {
     source ='src/test/java'
+}
+
+checkstyleIntegrationTest {
+    source ='src/integrationTest/java'
 }

@@ -16,7 +16,8 @@ public abstract class CreateCarProducer {
 
   public Mono<Void> handle(CreateCarMessage message) {
     return Mono.deferContextual(Mono::just)
-      .flatMap(ctx -> provide(message.id, message, String.valueOf(ctx.get("correlation-id"))));
+//      .flatMap(ctx -> provide(message.id, message, String.valueOf(ctx.get("correlation-id"))));
+      .flatMap(ctx -> provide(message.id, message, "12"));
   }
 
   public record CreateCarMessage(
@@ -27,10 +28,12 @@ public abstract class CreateCarProducer {
   ) {
   }
 
+  public static final String HEADER_CORRELATION_ID = "correlation-id";
+
   @Topic(TOPIC_NAME)
   protected abstract Mono<Void> provide(
     @KafkaKey String resourceId,
     CreateCarMessage message,
-    @MessageHeader("correlation-id") String correlationId
+    @MessageHeader(HEADER_CORRELATION_ID) String correlationId
   );
 }

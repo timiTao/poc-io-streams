@@ -1,5 +1,7 @@
 package poc.io.streams.ui.createcaraction;
 
+import static poc.io.streams.ui.createcaraction.CreateCarProducer.HEADER_CORRELATION_ID;
+
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
@@ -24,7 +26,7 @@ public class CreateCarAction {
     String correlationId = UUID.randomUUID().toString();
 
     return producer.handle(request.toMessage())
-      .contextWrite(ctx -> ctx.put("correlation-id", correlationId))
+      .contextWrite(ctx -> ctx.put(HEADER_CORRELATION_ID, correlationId))
       .thenReturn(HttpResponse.accepted(HttpResponse.uri("v1/request/" + correlationId)));
   }
 

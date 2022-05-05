@@ -1,0 +1,9 @@
+micronaut:
+  application:
+    env: test
+kafka:
+  consumers:
+    default:
+      allow.auto.create.topics: true
+redis:
+  url: "redis://127.0.0.1:6379"
